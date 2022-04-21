@@ -1,4 +1,6 @@
 # personal
-For exercises
-I will upload some backjoon codes and lecture example codes etc.
-2022.04.21 10:51
+연습용 개인 git   
+백준 풀이 코드나 강의 예제, 과제 코드 등이 올라갈 예정   
+열심히 합시다   
+   
+2022.04.21 10:51   
