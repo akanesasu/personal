@@ -1,53 +1,80 @@
 package homework;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class Homework08 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		long startTime = System.currentTimeMillis();
-		String outerPath = "I:/temp";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm");
+		String dirPath = "C:/homework/";
+		String tempPath = "C:/temp/";
+		String originalFileName = "sublime_text_setup.exe";
+		String originalFilePath = "C:/"+originalFileName;
+		String tempFilePath = "";
 		
-		int runtime = 100;
+		
+		System.out.println("============ Checking for directory presence...         ============");
+		File dirCheck = new File(dirPath);
+		if(dirCheck.exists()==true) {
+			System.out.println("============ Directory has existed.	                ============");
+		} else {
+			System.out.println("============ Directory has not existed.	Create " + dirPath + " ============");
+			dirCheck.mkdir();
+		} // if :: outer directory isExist, if false, create substitute directory
+		
+		
+		System.out.println("============ Checking for original file presence...     ============");
+		File fileCheck = new File(originalFilePath);
+		if(fileCheck.exists()==true) {
+			System.out.println("============ Original file has existed.	                ============");
+		} else {
+			System.out.println("!! Original file doesn't exist. Please check the file. Exit the process.");
+			return; // do not use exit() and use return instead, It runs in main() anyway
+		} // if :: original file isExist
+		
+		
+		System.out.println("============ Copy processing has started.               ============");
+		
+		while(true) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm");
+			String targetFileName = UUID.randomUUID().toString()+".exe";
+			String dateDirPath = dirPath+sdf.format(new Date())+"/"; // path of date directory
+			tempFilePath = tempPath+targetFileName;
 
-		try {
-			for(int i=1;i<=runtime;i++) {
-				Date now = new Date();
-				String strSdf = sdf.format(now);
-				File dateDir = new File(outerPath+"/"+strSdf);
-					
-				String uuid = UUID.randomUUID().toString();		
-				String innerPath = "I:/temp"+"/"+strSdf;
-				File uuidDir = new File(innerPath+"/"+uuid);
-					
+			File dateDir = new File(dateDirPath);
+			if(dateDir.exists()==false) {
 				dateDir.mkdir();
-				uuidDir.mkdir();
-				Thread.sleep(1*100);
-				printProgress(startTime,runtime,i);
-			}
-		} catch (InterruptedException ie) {}
-		System.out.println("============ Process Completed ============");
+			} // if :: make date directory
+			
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(originalFilePath));
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(tempFilePath));
+			
+			byte[] readBytes = new byte[128];
+			while( (bis.read(readBytes)) != -1 ) {
+				bos.write(readBytes);
+			} // copy file
+			
+			bos.flush();
+			bos.close(); // if close sub IOstream, also close main IOstream together
+			bis.close(); // close IOstream prior to move file because of already using process error
+			
+			Thread.sleep(5*1000); // insert interval between create and move
+			
+			// not using renameTo because It has many errors
+			Files.move(Paths.get(tempFilePath), Paths.get(dateDirPath+targetFileName)); // with googling
+			
+			System.out.println(String.format("\t  Processing... [ Lapse of time : %.3f s ]", 
+					(System.currentTimeMillis()-startTime)/1000f)); // print Lapse of time
+		} // while
+		
 	} // main
-
-	public static void printProgress(long startTime, long total, long current) {
-		long eta = current == 0 ? 0 : (total-current)*(System.currentTimeMillis()-startTime)/current;
-		int per = (int) (current * 100 / total);
-		
-		String etaHms = current == 0 ? "N/A" : String.format("%02d:%02d:%02d:%03d", 
-				TimeUnit.MILLISECONDS.toHours(eta), 
-				TimeUnit.MILLISECONDS.toMinutes(eta) % TimeUnit.HOURS.toMinutes(1),
-				TimeUnit.MILLISECONDS.toSeconds(eta) % TimeUnit.MINUTES.toSeconds(1),
-				TimeUnit.MILLISECONDS.toMillis(eta) % TimeUnit.SECONDS.toMillis(1));
-		
-		if(per==100) {
-			System.out.println(String.format("[ %3d%% Processing...] ETA : %s", per, etaHms));
-		} else if((int)(Math.random()*7)+1==(int)(Math.random()*7)+1) {
-			System.out.println(String.format("[ %3d%% Processing...] ETA : %s", per, etaHms));
-		}
-	} //printProgress
+	
 } // end class
