@@ -7,7 +7,7 @@ public class Grouping {
 		int[] userArr = new int[userNum];
 		int temp=0;
 		
-		int groupMem = 8; // 한 조당 인원수
+		int groupMem = 8; // 조당 인원수
 	
 		for(int i=0;i<userArr.length;i++) {		
 			while(true) {
