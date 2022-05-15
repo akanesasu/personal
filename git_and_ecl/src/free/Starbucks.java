@@ -46,7 +46,7 @@ public class Starbucks extends Order implements Orderable {
 		int i=0;
 		while(i<menu.length) {
 			if(menu[i].equals(getOrderMenu())) {
-				orderPrice = price[i];
+				setOrderPrice(price[i]);
 			}
 			i++;
 		} // while
