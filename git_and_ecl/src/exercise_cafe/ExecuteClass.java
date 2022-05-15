@@ -1,4 +1,4 @@
-package free;
+package exercise_cafe;
 
 import java.util.Scanner;
 

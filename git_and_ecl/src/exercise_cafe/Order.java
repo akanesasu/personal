@@ -1,4 +1,4 @@
-package free;
+package exercise_cafe;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package free;
+package exercise_cafe;
 
 import java.text.DecimalFormat;
 import java.util.Scanner;
