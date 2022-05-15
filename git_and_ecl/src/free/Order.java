@@ -13,7 +13,6 @@ public class Order {
 		this.orderMenu = orderMenu;
 		this.orderCup = orderCup;
 	} // constructor
-	
 } // end Order
 
 interface Orderable {
