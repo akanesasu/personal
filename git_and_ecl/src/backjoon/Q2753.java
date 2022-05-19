@@ -13,5 +13,6 @@ public class Q2753 {
          } else {
              System.out.print("0");
          }
+         sc.close();
     }
 }

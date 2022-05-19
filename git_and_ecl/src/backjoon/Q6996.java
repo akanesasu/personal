@@ -47,5 +47,6 @@ public class Q6996 {
 
             System.out.println(first + " & " + second + " are " + (solveAnagrams(first, second) ? "anagrams." : "NOT anagrams."));
         }
+        sc.close();
     }
 }

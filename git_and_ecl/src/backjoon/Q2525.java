@@ -17,7 +17,7 @@ public class Q2525 {
         } else {
             min = sumMin;
         }
-        
+        sc.close();
         System.out.println(hour + " " + min);
     }
 }

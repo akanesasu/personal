@@ -13,5 +13,6 @@ public class Q2588 {
         System.out.println((a*b2*10)/10);
         System.out.println((a*b3*100)/100);
         System.out.println(a*b);
+        sc.close();
     }
 }

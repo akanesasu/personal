@@ -22,5 +22,7 @@ public class Q1193 {
     			count++;
     		}
     	}
+    	
+    	sc.close();
     }
 }

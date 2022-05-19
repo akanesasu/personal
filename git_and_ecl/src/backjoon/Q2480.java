@@ -22,7 +22,7 @@ public class Q2480 {
         } else {
         	money = Math.max(n1, Math.max(n2, n3)) *100;
         }        
-        
+        sc.close();
         System.out.println(money);
     }
 }

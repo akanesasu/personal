@@ -15,5 +15,7 @@ public class Q2439 {
             }
             System.out.println();
         }
+        
+        sc.close();
     }
 }
