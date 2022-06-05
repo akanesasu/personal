@@ -3,8 +3,8 @@ package exercise_cafe;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 public class Order {
 	private String orderMenu;
 	private int orderCup;
