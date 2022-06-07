@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 가입</title>
+    <style>
+        /* font import */
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Noto+Sans+KR:wght@700&display=swap');
+        
+        body {
+            background-color: #FFFAF0;
+        }
+
+        #header {
+            margin-top: 30px;
+            text-align: center;
+            font-size:22pt;
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        #line {
+            border-bottom: 2px solid red;
+            width:800px;
+            margin: auto;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 250px auto;
+            margin:auto;
+            width:600px;
+            height:650px;
+            padding-top: 30px;
+        }
+
+        .leftCol {
+            border-right:2px solid black;
+            margin-bottom: 80px;
+        }
+
+        .menu {
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            font-weight: bold;
+            font-size: 20pt;
+            margin-bottom: 35px;
+        }
+
+        .rightCol {
+            padding-left: 30px;
+            padding-top:15px;
+        }
+
+        .inputFormBox {
+            margin-bottom: 51px;
+        }
+
+        #birth_table {
+            width:300px;
+            margin-bottom: 60px;
+            font-size: 17px;
+        }
+
+        #submit {
+            width:300px;
+            height:40px;
+            border-width: 2px;
+            font-weight: bold;
+            font-size:14px;
+            margin:auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="header"><h1>[ 회 원 가 입 ]</h1></div>
+    <div id="line"></div>
+    <div class="container">
+        <div class="leftCol">
+            <ul>
+                <li><p class="menu">아이디</p></li>
+                <li><p class="menu">비밀번호</p></li>
+                <li><p class="menu">비밀번호 재입력</p></li>
+                <li><p class="menu">이름</p></li>
+                <li><p class="menu">생년월일</p></li>
+                <li><p class="menu">성별</p></li>
+                <li><p class="menu">이메일</p></li>
+                <li><p class="menu">휴대전화</p></li>
+            </ul>
+        </div>
+        <div class="rightCol">
+            <form id="user_submit">
+                <p class="inputFormBox"><input type="text" 
+                    id="id" size="30" placeholder="아이디를 입력하세요" required autofocus autocomplete="off"></p>
+
+                <p class="inputFormBox"><input type="password" 
+                    id = "pwd1" size="30" maxlength="15" placeholder="15자 미만으로 입력해주세요" required></p>
+
+                <p class="inputFormBox"><input type="password" 
+                    id = "pwd2" size="30" maxlength="15" placeholder="비밀번호를 다시 입력해주세요" required></p>
+
+                <p class="inputFormBox"><input type="text" 
+                    id="username" size="30" placeholder="이름을 입력하세요" required autocomplete="off"></p>
+
+                <p class="inputFormBox">
+                    <table id="birth_table">
+                        <tr>
+                            <th>
+                                <select name="yy" id="year" onchange="selectYear()"></select>  년
+                            </th>
+                            <th>
+                                <select name="mm" id="month" onchange="selectMonth()"></select>  월
+                            </th>
+                            <th>
+                                <select name="dd" id="day" onchange="selectDay()"></select>  일
+                            </th>
+                          </tr>
+                    </table>   
+                </p>
+
+                <p class="inputFormBox">
+                    <select id="gender" onchange="selectGender()">
+                        <option value="" selected disabled hidden>==선택==</option>
+                        <option value="남">남</option>
+                        <option value="여">여</option>
+                    </select>
+                </p>
+                
+                <p class="inputFormBox"><input type="text" 
+                    id="email" size="10" placeholder="메일주소" required autocomplete="off">  @ 
+                    <select id="emailDomain" onchange="selectEmailDomain()">
+                        <option value="" selected disabled hidden>==선택==</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="gmail.com">gmail.com</option>
+                    </select> 
+                </p>
+
+                <p class="inputFormBox">
+                    <select id="phoneidfy" onchange="selectPhoneIdfy()">
+                        <option value="" selected disabled hidden>==선택==</option>
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
+                    </select> 
+                     - 
+                    <input type="text" 
+                    id="phonefirst" size="5" placeholder="" required autocomplete="off"> - 
+
+                    <input type="text" 
+                    id="phonelast" size="5" placeholder="" required autocomplete="off">
+                </p>
+
+                
+            </form>
+        </div>
+    </div>
+    <div id="line"></div>
+    <br>
+    <input type="button" id="submit" value="등록" onclick="result()">
+    
+    <script>
+        /* 생년월일 select 박스 채우기 */
+        let idx=0;
+        for(let i=2022;i>=1922;i--) {
+            document.getElementById("year").options[idx] = new Option(i, i);
+            idx++;
+        }
+
+        idx=0;
+
+        for(let i=1;i<13;i++) {
+            document.getElementById("month").options[idx] = new Option(i, i);
+            idx++;
+        }
+
+        idx=0;
+
+        for(let i=1;i<32;i++) {
+            document.getElementById("day").options[idx] = new Option(i, i);
+            idx++;
+        }
+
+        /* select로 받은 요소 집어넣기 */
+        function selectYear() {
+            const year = document.getElementById("year")
+                .options[document.getElementById("year").selectedIndex].value;
+            }
+
+        function selectMonth() {
+            const month = document.getElementById("month")
+                .options[document.getElementById("month").selectedIndex].value;
+        }
+
+        function selectDay() {
+            const day = document.getElementById("day")
+                .options[document.getElementById("day").selectedIndex].value;
+        }
+
+        function selectGender() {
+            const gender = document.getElementById("gender")
+                .options[document.getElementById("gender").selectedIndex].value;
+        }
+
+        function selectEmailDomain() {
+            const email = document.getElementById("emailDomain")
+                .options[document.getElementById("emailDomain").selectedIndex].value;
+        }
+
+        function selectPhoneIdfy() {
+            const phoneidfy = document.getElementById("phoneidfy")
+                .options[document.getElementById("phoneidfy").selectedIndex].value;
+        }
+
+        /* 메시지 박스 */
+        function result() {
+            if(pwd1.value != pwd2.value) {
+                alert("비밀번호를 확인해주세요.");
+            } else {
+                alert("가입되었습니다. \n" +
+                    "\n아이디 : " + id.value + "\n이름 : "  + username.value + 
+                    "\n생년월일 : "  + year.value + "/"  + month.value + "/"  + day.value +
+                    "\n성별 : "  + gender.value +
+                    "\n메일주소 : " + email.value + "@" + emailDomain.value +
+                    "\n핸드폰번호 : " + phoneidfy.value + "-" + phonefirst.value + "-" + phonelast.value
+                );
+            }
+        }
+    </script>
+</body>
+</html>
