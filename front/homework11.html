@@ -57,7 +57,7 @@
         }
 
         #birth_table {
-            width:300px;
+            width:350px;
             margin-bottom: 60px;
             font-size: 17px;
         }
@@ -101,26 +101,26 @@
                     id = "pwd2" size="30" maxlength="15" placeholder="비밀번호를 다시 입력해주세요" required></p>
 
                 <p class="inputFormBox"><input type="text" 
-                    id="username" size="30" placeholder="이름을 입력하세요" required autocomplete="off"></p>
+                    id="username" size="30" placeholder="이름을 입력하세요" autocomplete="off"></p>
 
                 <p class="inputFormBox">
                     <table id="birth_table">
                         <tr>
                             <th>
-                                <select name="yy" id="year" onchange="selectYear()"></select>  년
+                                <select name="yy" id="year"></select>  년
                             </th>
                             <th>
-                                <select name="mm" id="month" onchange="selectMonth()"></select>  월
+                                <select name="mm" id="month"></select>  월
                             </th>
                             <th>
-                                <select name="dd" id="day" onchange="selectDay()"></select>  일
+                                <select name="dd" id="day"></select>  일
                             </th>
                           </tr>
                     </table>   
                 </p>
 
                 <p class="inputFormBox">
-                    <select id="gender" onchange="selectGender()">
+                    <select id="gender">
                         <option value="" selected disabled hidden>==선택==</option>
                         <option value="남">남</option>
                         <option value="여">여</option>
@@ -129,7 +129,7 @@
                 
                 <p class="inputFormBox"><input type="text" 
                     id="email" size="10" placeholder="메일주소" required autocomplete="off">  @ 
-                    <select id="emailDomain" onchange="selectEmailDomain()">
+                    <select id="emailDomain">
                         <option value="" selected disabled hidden>==선택==</option>
                         <option value="naver.com">naver.com</option>
                         <option value="gmail.com">gmail.com</option>
@@ -137,7 +137,7 @@
                 </p>
 
                 <p class="inputFormBox">
-                    <select id="phoneidfy" onchange="selectPhoneIdfy()">
+                    <select id="phoneidfy">
                         <option value="" selected disabled hidden>==선택==</option>
                         <option value="010">010</option>
                         <option value="011">011</option>
@@ -153,7 +153,6 @@
                     id="phonelast" size="5" placeholder="" required autocomplete="off">
                 </p>
 
-                
             </form>
         </div>
     </div>
@@ -165,59 +164,44 @@
         /* 생년월일 select 박스 채우기 */
         let idx=0;
         for(let i=2022;i>=1922;i--) {
-            document.getElementById("year").options[idx] = new Option(i, i);
+            if(idx==0) {
+                document.getElementById("year").options[idx] = new Option("==선택==", "==선택==");
+            } else {
+                document.getElementById("year").options[idx] = new Option(i, i);
+            }
             idx++;
         }
 
         idx=0;
 
         for(let i=1;i<13;i++) {
-            document.getElementById("month").options[idx] = new Option(i, i);
+            if(idx==0) {
+                document.getElementById("month").options[idx] = new Option("==선택==", "==선택==");
+            } else {
+                document.getElementById("month").options[idx] = new Option(i, i);
+            }
             idx++;
         }
 
         idx=0;
 
         for(let i=1;i<32;i++) {
-            document.getElementById("day").options[idx] = new Option(i, i);
-            idx++;
-        }
-
-        /* select로 받은 요소 집어넣기 */
-        function selectYear() {
-            const year = document.getElementById("year")
-                .options[document.getElementById("year").selectedIndex].value;
+            if(idx==0) {
+                document.getElementById("day").options[idx] = new Option("==선택==", "==선택==");
+            } else {
+                document.getElementById("day").options[idx] = new Option(i, i);
             }
-
-        function selectMonth() {
-            const month = document.getElementById("month")
-                .options[document.getElementById("month").selectedIndex].value;
-        }
-
-        function selectDay() {
-            const day = document.getElementById("day")
-                .options[document.getElementById("day").selectedIndex].value;
-        }
-
-        function selectGender() {
-            const gender = document.getElementById("gender")
-                .options[document.getElementById("gender").selectedIndex].value;
-        }
-
-        function selectEmailDomain() {
-            const email = document.getElementById("emailDomain")
-                .options[document.getElementById("emailDomain").selectedIndex].value;
-        }
-
-        function selectPhoneIdfy() {
-            const phoneidfy = document.getElementById("phoneidfy")
-                .options[document.getElementById("phoneidfy").selectedIndex].value;
+            idx++;
         }
 
         /* 메시지 박스 */
         function result() {
-            if(pwd1.value != pwd2.value) {
-                alert("비밀번호를 확인해주세요.");
+            if (id.value=="") {
+                alert("ID는 필수 입력사항입니다.");
+            } else if(pwd1.value=="") {
+                alert("비밀번호는 필수 입력사항입니다.");
+            } else if(pwd1.value != pwd2.value) {
+                alert("입력하신 두 비밀번호가 다릅니다.");
             } else {
                 alert("가입되었습니다. \n" +
                     "\n아이디 : " + id.value + "\n이름 : "  + username.value + 
